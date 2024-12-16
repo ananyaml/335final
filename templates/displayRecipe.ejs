@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+    <style>
+        table {
+            background-color: white;
+            border: 1px solid black;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: white;
+        }
+        img {
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body style="background-color: lightblue;">
+    <h2 style="color: purple;">Recipes You Requested</h2>
+
+    <table>
+        <tr>
+            <th>Name & Image</th>
+            <th>RecipeID</th>
+            <th>Details</th>
+        </tr>
+        <% recipesWithDetails.forEach(entry => { %>
+            <tr>
+                <td>
+                    <%= entry.details?.title || "N/A" %>
+                    <% if (entry.details?.image) { %>
+                        <img src="<%= entry.details.image %>" alt="<%= entry.details.title %>">
+                    <% } %>
+                </td>
+                <td><%= entry.recipeID %></td>
+                <td>
+                    <% if (entry.details) { %>
+                        <strong>Description:</strong> <%= entry.details.description || "N/A" %><br>
+                        <strong>Difficulty:</strong> <%= entry.details.difficulty || "N/A" %><br>
+                        <strong>Time:</strong> <%= entry.details.time || "N/A" %><br>
+                        <strong>Ingredients:</strong> <%= entry.details.ingredients.join(", ") || "N/A" %><br>
+                        <strong>Method:</strong><br>
+                        <% if (entry.details.method && entry.details.method.length > 0) { %>
+                            <ol>
+                                <% entry.details.method.forEach(step => { %>
+                                    <% for (let key in step) { %>
+                                        <li><strong><%= key %>:</strong> <%= step[key] %></li>
+                                    <% } %>
+                                <% }); %>
+                            </ol>
+                        <% } else { %>
+                            N/A
+                        <% } %>
+                    <% } else { %>
+                        Recipe details unavailable
+                    <% } %>
+                </td>
+            </tr>
+        <% }); %>
+    </table>
+
+    <hr>
+    <a href="/">HOME</a>
+</body>
+</html>
+

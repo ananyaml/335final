@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Chinese Food Recipes</title>
+</head>
+<body style = 'background-color: lightblue;'>
+   
+    <h1 style = 'color: purple;'>Chinese Food: Order and Get Recipes</h1>
+
+    Place an order! <a href="/order"> Order Recipe </a><br><br>
+	Retrieve an order's recipe! <a href="/retrieveRecipe">Find Recipe</a><br>
+    <div id="display">
+    
+    </div>
+</body>
+</html>
+
+<script>
+
+    //from recipes.json
+    //For each image and recipe name and difficulty and recipe id from the json, list it all out 
+    let recipes = '<%- recipes %>'; // Converts server-side recipes data to a JavaScript object
+    recipes = JSON.parse(recipes);
+    
+    let table = "<ul>"; // Start the unordered list to display recipes
+
+    // Iterate over each recipe and create a list item for it
+    recipes.forEach(recipe => {
+        table += `<li>
+                    <h2>${recipe.title}</h2> 
+                    <p>Recipe ID: ${recipe.id}</p>
+                    <p>Difficulty: ${recipe.difficulty}</p>
+                    <img src="${recipe.image}" alt="${recipe.title}" width="100" height="100">
+                  </li>`;
+    });
+
+    table += "</ul>"; // Close the unordered list
+
+    // Set the inner HTML of the display div to the generated table
+    document.querySelector("#display").innerHTML = table;
+
+</script>
+
+
